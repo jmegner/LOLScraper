@@ -18,7 +18,7 @@ import codecs
 
 
 global LolScraperVersion
-LolScraperVersion = "0.01"
+LolScraperVersion = "0.02"
 
 
 ################################################################################
@@ -198,8 +198,8 @@ def getDataForRegion(region):
             raise ValueError("ranking table body rows were weird")
 
         for row in bodyRows:
-            entryTexts = [elem.string.strip() for elem in row.contents
-                if elem is not None and elem.string is not None]
+            entryTexts = [elem.string.replace(",","").strip() for elem
+                in row.contents if elem is not None and elem.string is not None]
 
             if len(columnTitles) != len(entryTexts) :
                 raise ValueError("weird number of entry texts in ranking table body row")
@@ -219,6 +219,8 @@ def getDataForRegion(region):
             + str(lastPageNum))
 
         pageNum += 1
+
+    summonerListFile.close()
 
     return 0
 
